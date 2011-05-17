@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Skeleton: Displays "Hello World!"
+ * 
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Myron Turner
+ * @author     Myron Turner <turnermm02@shaw.ca>
  */
 if(!defined('DOKU_INC')) die();
 
@@ -103,34 +103,44 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
 
    function get_delete_list() {
       $macros = $this->get_macros();
+      ptln('<table cellspacing="4px" width="90%">');
       foreach($macros as $macro=>$subst) {
-          ptln ("<input type='checkbox' name='delete[$macro]' value='$subst'>"); 
-          ptln( "&nbsp;$macro = $subst<br />");
+          ptln("<tr><td><input type='checkbox' name='delete[$macro]' value='$subst'>"); 
+          ptln( "<td style='padding:4px;'>$macro<td>$subst</td>");
            
       }
+      ptln('</table>');
    }
 
    function get_edit_list() {
       $macros = $this->get_macros();
-      ptln('<table colspacing="4"><tr><th>Macro</th><th>Substitution</th></tr>');
+      ptln('<table cellspacing="4"><tr><th align="center">Macro</th><th align="center">Substitution</th></tr>');
       foreach($macros as $macro=>$subst) {
-          ptln("<tr><td>$macro&nbsp;</td><td>");
-          $encoded = urlencode($subst);
-         // $subst = hsc($subst); 
+          ptln("<tr><td align='center'>$macro&nbsp;</td><td>");
+          $encoded = urlencode($subst);        
           if($subst != $encoded) { 
              ptln("<input type = 'hidden' name='encoded[$macro]' value='$encoded'>");
           }
-          ptln ("<input type='text' size='80' name='edit[$macro]' onchange='replace_encode(this)' value='$subst'></td></tr>");            
+          if(strlen($subst) > 80) {
+            ptln ("<textarea cols='55' rows='3' name='edit[$macro]' onchange='replace_encode(this)'>$subst</textarea></td></tr>");            
+
+          }
+          else {
+            ptln ("<input type='text' size='80' name='edit[$macro]' onchange='replace_encode(this)' value='$subst'></td></tr>");            
+          }
+
       }
       ptln('</table>');
    }
 
    function view_entries() {
       $macros = $this->get_macros();
+      ptln('<table cellpadding="8px"  width="90%">');
       foreach($macros as $macro=>$subst) {
-          ptln( "$macro = $subst<br />"  );
+          ptln( "<tr><td align='center'>$macro<td style='padding: 4px; border-bottom: 1px solid black;'>$subst</tr>");
          
       }
+      ptln('</table>');
    }
 
    function js() {
@@ -139,7 +149,16 @@ echo <<<JSFN
 
  <script type="text/javascript">
  //<![CDATA[ 
-    var replace_divs= new Array('macro_add','macro_del','macro_edit');
+    var replace_divs= new Array('macro_add','macro_del','macro_edit','ti_info','macro_list');
+   /**
+    * Edit onChange handler
+    * @param el  input element which has been changed
+    * @desc  if an encode hidden input already exists, its value
+    *        is re-encoded from the text input's value
+    *        If not, a new encoded hidden input is created with the encoded 
+    *        value.  The encode input value is used to substitute the new edit values
+    *        in the php edit() function 
+   */
     function replace_encode (el) {
       var matches = el.name.match(/\[(.*)\]/);
       if(matches[1]) {  
@@ -164,6 +183,7 @@ echo <<<JSFN
       $(replace_divs[i]).style.display='none';
     }
     $(which).style.display='block';
+    $('ti_info_btn').style.display='inline';
  }
 //]]> 
  </script>
@@ -178,7 +198,13 @@ JSFN;
       if($this->output) {
         ptln('<pre>' . $this->output . '</pre>');
       }
-      ptln('<div style="padding:4px">' . $this->getLang('msg') . '</div>');
+      ptln('<div style="padding:4px" id="ti_info">');     
+      ptln('<div style="text-align:right;">');
+      ptln('<button class="button" style="padding:0px;margin:0px;" onclick="replace_show(\'ti_info_btn\');">');
+      ptln($this->getLang('hide_info') .'</button>&nbsp;&nbsp;&nbsp;&nbsp;');
+      ptln('</div>');
+      ptln('<h2>Info</h2>'); 
+      ptln($this->getLang('msg') . '</div>');
      
       ptln('<div style="padding-bottom:8px;">');
       ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');
@@ -195,6 +221,9 @@ JSFN;
 
       ptln('<button class="button" onclick="$(\'macro_list\').style.display=\'none\';">');
       ptln($this->getLang('hide_macros') .'</button>');
+
+      ptln('<button class="button" id="ti_info_btn" style="display:none" onclick="$(\'ti_info\').style.display=\'block\';">');
+      ptln($this->getLang('show_info') .'</button>');
    
       ptln('</div>');
       ptln('<form action="'.wl($ID).'" method="post">');
@@ -205,7 +234,8 @@ JSFN;
       formSecurityToken();
 
       ptln('<div id="macro_add" style="display:none">');
-      ptln( '<table><tr><th>Macro</th><th>' . $this->getLang('col_subst') . '</th></tr>');
+      ptln('<h2>' . $this->getLang('label_add') . '</h2>');
+      ptln( '<table cellspacing="8px"><tr><th>Macro</th><th>' . $this->getLang('col_subst') . '</th></tr>');
       ptln('<tr><td>  <input type="text" name="macro[A]" id="m_A" value="" /></td>');
       ptln('<td>  <input type="text" name="word[A]"  size="80" id="w_A" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[B]" id="m_B" value="" /></td>');
@@ -216,15 +246,20 @@ JSFN;
       ptln('<td>  <input type="text" name="word[D]" size="80" id="w_C" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[E]" id="m_E" value="" /></td>');
       ptln('<td>  <input type="text" name="word[E]" size="80" id="w_E" value="" /></td>');
+      ptln('<tr><td>  <input type="text" name="macro[F]" id="m_F" value="" /></td>');
+      ptln('<td>  <textarea cols="45" name="word[F]" rows="4" id="w_F"></textarea></td>');
       ptln('</table>');      
       ptln('  <input type="submit" name="cmd[add]"  value="'.$this->getLang('btn_add').'" />');
       ptln('</div><br />');
 
       ptln('<div id="macro_del" style="display:none">');
+      ptln('<h2>' . $this->getLang('label_del') . '</h2>');
       $this->get_delete_list();
       ptln('<br /><input type="submit" name="cmd[delete]"  value="'.$this->getLang('btn_del').'" />');
       ptln('</div>');    
+
       ptln('<div id="macro_edit" style="display:none; padding: 8px;">');
+      ptln('<h2>' . $this->getLang('label_edit') . '</h2>');
       $this->get_edit_list();
       ptln('<br /><input type="submit" name="cmd[edit]"  value="'.$this->getLang('btn_edit').'" />');
       ptln('</div>');    

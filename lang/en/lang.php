@@ -14,18 +14,36 @@ $lang['btn_add'] = 'Add';
 $lang['btn_del'] = 'Delete';
 $lang['btn_edit'] = 'Edit';
 
+$lang['label_list'] = "Macro List";
+$lang['label_add'] = "Add Macros";
+$lang['label_del'] = "Delete Macros";
+$lang['label_edit'] = "Edit Macros";
+
 $lang['col_subst'] = 'Macro Substitution';
 $lang['add_macros'] = 'Add Macros';
 $lang['delete_macros'] = 'Delete Macros';
 $lang['edit_macros'] = 'Edit Macros';
 $lang['view_macros'] = 'View Macro List';
 $lang['hide_macros'] = 'Hide Macro List';
-$lang['msg'] = 'This panel enables you to add and delete macros to your macro list.  A macro
-can contain letters, numbers, underscores, hyphens and periods.  For example:
- <ul> 
- <li>Macro_one.txt
- </ul>
-You can add or edit up to five macros at a time.  Deletions are unlimited. To edit a macro simply edit
-the Subsitution column.<br /><br />
+$lang['hide_info'] = 'Close Info';
+$lang['show_info'] = 'Show Info';
+
+$lang['msg'] = 'This panel enables you to add and delete macros to your macro list, and to edit them
+after they have been saved.  A macro can contain letters, numbers, underscores, hyphens and periods. 
+For example:&nbsp;&nbsp;<code>Macro_one.txt</code>
+<p>
+You can add up to six macros at a time.  The sixth is a text area which will allow for extended texts.
+Enter the macro name in the Macro column and the texts which they represent in the Substitution
+column. 
+</p>
+<p>
+Deletions are unlimited; check off the box(es) next the macro(s) to be deleted and click
+the Delete button at the bottom of the screen. Editing is done through the Edit screen, where you are presented
+with all your macros.  You can edit the texts of any number of macros.
+</p>
+<p>
+The macro list will not refresh until after you have submitted your edits, additions, or deletions
+by clicking the appropriate button at the bottom of the screen.
+</p>
 ';
 

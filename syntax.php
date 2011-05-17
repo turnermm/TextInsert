@@ -3,7 +3,7 @@
  * 
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Myron Tunrer <turnermm02@shaw.ca>
+ * @author     Myron Turner <turnermm02@shaw.ca>
  * 
  */
 // must be run within Dokuwiki

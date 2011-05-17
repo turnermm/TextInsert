@@ -1,13 +1,14 @@
 <?php
 /**
+ * Plugin Skeleton: Displays "Hello World!"
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Myron Turner <turnermm02@shaw.ca>
+ * @author     Myron Turner
  */
 if(!defined('DOKU_INC')) die();
 
-define('textinsert_DIR', DOKU_INC . 'data/meta/macros/');
-define('MACROS_FILE', textinsert_DIR . 'macros.ser');
+define('REPLACE_DIR', DOKU_INC . 'data/meta/macros/');
+define('MACROS_FILE', REPLACE_DIR . 'macros.ser');
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
@@ -115,11 +116,11 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
       foreach($macros as $macro=>$subst) {
           ptln("<tr><td>$macro&nbsp;</td><td>");
           $encoded = urlencode($subst);
-          $subst = hsc($subst); 
+         // $subst = hsc($subst); 
           if($subst != $encoded) { 
              ptln("<input type = 'hidden' name='encoded[$macro]' value='$encoded'>");
           }
-          ptln ("<input type='text' size='80' name='edit[$macro]' onchange='textinsert_encode(this)' value='$subst'></td></tr>");            
+          ptln ("<input type='text' size='80' name='edit[$macro]' onchange='replace_encode(this)' value='$subst'></td></tr>");            
       }
       ptln('</table>');
    }
@@ -138,14 +139,14 @@ echo <<<JSFN
 
  <script type="text/javascript">
  //<![CDATA[ 
-    var textinsert_divs= new Array('macro_add','macro_del','macro_edit');
-    function textinsert_encode (el) {
+    var replace_divs= new Array('macro_add','macro_del','macro_edit');
+    function replace_encode (el) {
       var matches = el.name.match(/\[(.*)\]/);
       if(matches[1]) {  
         var name = 'encoded['+matches[1]+']';
         var val = el.value;
-        val = val.textinsert(/>/g,"&gt;"); 
-        val = val.textinsert(/</g,"&lt;");          
+        val = val.replace(/>/g,"&gt;"); 
+        val = val.replace(/</g,"&lt;");          
         if(!el.form[name]) {
             var encoder = document.createElement('input');           
             encoder.type = 'hidden';
@@ -158,9 +159,9 @@ echo <<<JSFN
         }
       }
     }
- function textinsert_show(which) {
-    for(var i in textinsert_divs) {
-      $(textinsert_divs[i]).style.display='none';
+ function replace_show(which) {
+    for(var i in replace_divs) {
+      $(replace_divs[i]).style.display='none';
     }
     $(which).style.display='block';
  }
@@ -180,13 +181,13 @@ JSFN;
       ptln('<div style="padding:4px">' . $this->getLang('msg') . '</div>');
      
       ptln('<div style="padding-bottom:8px;">');
-      ptln('<button class="button" onclick="textinsert_show(\'macro_add\'); ">');
+      ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');
       ptln($this->getLang('add_macros') .'</button>&nbsp;');
      
-      ptln('<button class="button" onclick="textinsert_show(\'macro_del\'); ">');
+      ptln('<button class="button" onclick="replace_show(\'macro_del\'); ">');
       ptln($this->getLang('delete_macros') .'</button>&nbsp;');
 
-      ptln('<button class="button" onclick="textinsert_show(\'macro_edit\'); ">');
+      ptln('<button class="button" onclick="replace_show(\'macro_edit\'); ">');
       ptln($this->getLang('edit_macros') .'</button>');
 
       ptln('<button class="button" onclick="$(\'macro_list\').style.display=\'block\';">');
@@ -206,15 +207,15 @@ JSFN;
       ptln('<div id="macro_add" style="display:none">');
       ptln( '<table><tr><th>Macro</th><th>' . $this->getLang('col_subst') . '</th></tr>');
       ptln('<tr><td>  <input type="text" name="macro[A]" id="m_A" value="" /></td>');
-      ptln('<td>  <input type="text" name="word[A]"  id="w_A" value="" /></td></tr>');
+      ptln('<td>  <input type="text" name="word[A]"  size="80" id="w_A" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[B]" id="m_B" value="" /></td>');
-      ptln('<td>  <input type="text" name="word[B]" id="w_B" value="" /></td></tr>');
+      ptln('<td>  <input type="text" name="word[B]" size="80" id="w_B" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[C]" id="m_C" value="" /></td>');
-      ptln('<td>  <input type="text" name="word[C]" id="w_C" value="" /></td></tr>');
+      ptln('<td>  <input type="text" name="word[C]" size="80"  id="w_C" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[D]" id="m_D" value="" /></td>');
-      ptln('<td>  <input type="text" name="word[D]" id="w_C" value="" /></td></tr>');
+      ptln('<td>  <input type="text" name="word[D]" size="80" id="w_C" value="" /></td></tr>');
       ptln('<tr><td>  <input type="text" name="macro[E]" id="m_E" value="" /></td>');
-      ptln('<td>  <input type="text" name="word[E]" id="w_E" value="" /></td>');
+      ptln('<td>  <input type="text" name="word[E]" size="80" id="w_E" value="" /></td>');
       ptln('</table>');      
       ptln('  <input type="submit" name="cmd[add]"  value="'.$this->getLang('btn_add').'" />');
       ptln('</div><br />');

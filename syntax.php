@@ -1,10 +1,10 @@
 <?php
 /**
- * Info Plugin: Displays information about various DokuWiki internals
+ * 
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Esther Brunner <wikidesign@gmail.com>
+ * @author     Myron Tunrer <turnermm02@shaw.ca>
+ * 
  */
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();

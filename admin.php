@@ -17,12 +17,14 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
 
     var $output = false;
     var $macros_file;
+    var $macros_data; //used for html listings
     /**
      * handle user request
      */
     function handle() {
+      
       $this->macros_file=MACROS_FILE;
-    
+       
       if (!isset($_REQUEST['cmd'])) return;   // first time - nothing to do
 
       $this->output = '';
@@ -49,8 +51,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
     }
  
     function add() {
-     
-     $a = unserialize(file_get_contents(MACROS_FILE)); 
+     $a = $this->get_macros();
      $macros = $_REQUEST['macro'];  
      $words = $_REQUEST['word'];      
     
@@ -67,7 +68,6 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
     }
 
     function del() {   
-
       $macros = $this->get_macros();
 
       $deletions = $_REQUEST['delete'];  
@@ -102,7 +102,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
     }
 
    function get_delete_list() {
-      $macros = $this->get_macros();
+      $macros = $this->macros_data;
       ptln('<table cellspacing="4px" width="90%">');
       foreach($macros as $macro=>$subst) {
           ptln("<tr><td><input type='checkbox' name='delete[$macro]' value='$subst'>"); 
@@ -113,7 +113,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
    }
 
    function get_edit_list() {
-      $macros = $this->get_macros();
+      $macros = $this->macros_data;
       ptln('<table cellspacing="4"><tr><th align="center">Macro</th><th align="center">Substitution</th></tr>');
       foreach($macros as $macro=>$subst) {
           ptln("<tr><td align='center'>$macro&nbsp;</td><td>");
@@ -134,7 +134,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
    }
 
    function view_entries() {
-      $macros = $this->get_macros();
+      $macros = $this->macros_data;
       ptln('<table cellpadding="8px"  width="90%">');
       foreach($macros as $macro=>$subst) {
           ptln( "<tr><td align='center'>$macro<td style='padding: 4px; border-bottom: 1px solid black;'>$subst</tr>");
@@ -194,6 +194,7 @@ JSFN;
      * output appropriate html
      */
     function html() {
+     $this->macros_data = $this->get_macros();
      $this->js();
       if($this->output) {
         ptln('<pre>' . $this->output . '</pre>');
@@ -216,7 +217,7 @@ JSFN;
       ptln('<button class="button" onclick="replace_show(\'macro_edit\'); ">');
       ptln($this->getLang('edit_macros') .'</button>');
 
-      ptln('<button class="button" onclick="$(\'macro_list\').style.display=\'block\';">');
+      ptln('<button class="button" onclick="$(\'macro_list\').style.display=\'block\';$(\'macro_list\').scrollIntoView();">');
       ptln($this->getLang('view_macros') .'</button>&nbsp;');
 
       ptln('<button class="button" onclick="$(\'macro_list\').style.display=\'none\';">');

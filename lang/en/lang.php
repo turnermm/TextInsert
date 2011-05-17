@@ -8,7 +8,7 @@
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
 // if set here, the plugin doesn't need to override the getMenuText() method
-$lang['menu'] = 'Macro Replacement Plugin'; 
+$lang['menu'] = 'TextInsert Macro Replacement Plugin'; 
 
 $lang['btn_add'] = 'Add';
 $lang['btn_del'] = 'Delete';

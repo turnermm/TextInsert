@@ -12,7 +12,7 @@ $lang['menu'] = 'TextInsert Macro Replacement Plugin';
 
 $lang['btn_add'] = 'Add';
 $lang['btn_del'] = 'Delete';
-$lang['btn_edit'] = 'Edit';
+$lang['btn_edit'] = 'Submit Edits';
 
 $lang['label_list'] = "Macro List";
 $lang['label_add'] = "Add Macros";

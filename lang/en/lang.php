@@ -28,13 +28,14 @@ $lang['hide_macros'] = 'Hide Macro List';
 $lang['hide_info'] = 'Close Info';
 $lang['show_info'] = 'Show Info';
 
-$lang['msg'] = 'This panel enables you to add and delete macros to your macro list, and to edit them
-after they have been saved.  A macro can contain letters, numbers, underscores, hyphens and periods. 
-For example:&nbsp;&nbsp;<code>Macro_one.txt</code>
+$lang['msg'] = 'This panel enables you to add and delete macros and their replacement
+texts, and to edit them after they have been saved.  A macro name can contain letters, 
+numbers, underscores, hyphens and periods. For example:&nbsp;&nbsp;<code>Macro_one.txt</code>
+The replacement texts can accept HTML and can be of any length.
 <p>
 You can add up to six macros at a time.  The sixth is a text area which will allow for extended texts.
-Enter the macro name in the Macro column and the texts which they represent in the Substitution
-column. 
+Enter the macro name in the <b>Macro</b> column and the texts which they represent in the
+<b>Substitution</b> column. 
 </p>
 <p>
 Deletions are unlimited; check off the box(es) next the macro(s) to be deleted and click

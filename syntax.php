@@ -62,8 +62,10 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
      * Handle the match
      */
     function handle($match, $state, $pos, &$handler){
+        $html=false;
         $match = substr($match,2,-2); 
         $match = trim($match);   
+        if(strpos($match, 'HTML')) $html=true;
         file_put_contents(DOKU_INC ."textinsert.txt", $match);
         $macros = $this->get_macros();
         if(!array_key_exists($match, $macros)) {
@@ -71,7 +73,10 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
            $match = "";              
         }
         else $match =$macros[$match];
-
+        if($html) {
+          $match =  str_replace('&lt;','<',$match);
+          $match =  str_replace('&gt;','>',$match);
+        }
         return array($state,$match);
     }
 

@@ -111,7 +111,12 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
             $match = str_replace($pats[$i],$insert,$match);
           }
       }
+    
+      $entities =  getEntities();
+      $e_keys = array_keys($entities);
+      $e_values =  array_values($entities);
 
+      $match = str_replace($e_keys,$e_values,$match);  
       return  $match;
    }
    

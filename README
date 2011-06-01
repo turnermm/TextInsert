@@ -17,6 +17,13 @@ The result is:
     
 It accepts only one level of macro inclusion, so that if MACRO_3 were included in
 MACRO_2, MACRO_3 would not be rendered.
+
+The macro definitions will also accept entities defined dokuwiki's conf/entities.conf and
+user-defined entities conf/entities.local.conf.  Entities will be replaced in both the
+primary and the included macros.
+
+See http://dokuwiki.org/plugin:textinsert for further information.
+
  
 
 

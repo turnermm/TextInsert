@@ -3,3 +3,20 @@ strings of text.
 
 It provides an administrative panel which makes for simple adding, editing and deletion
 of macros.
+
+Much of the functionality of this plugin can be more easily implemented with Dokuwiki's
+own entities facility: http://www.dokuwiki.org/entities.  The advantage of TextInsert
+comes when dealing with extended blocks of text and with its ability to include other
+macros inside the primary macro definition. That is, it can accept:
+
+MACRO_1  This macro can include #@MACR0_2@# inside it.
+MACRO_2  a second macro
+
+The result is:
+    This macro can include a second macro inside it.
+    
+It accepts only one level of macro inclusion, so that if MACRO_3 were included in
+MACRO_2, MACRO_3 would not be rendered.
+ 
+
+

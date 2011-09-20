@@ -1,6 +1,8 @@
 This is a macro substitution plugin which enables substitutions of both words and longer
 strings of text.
 
+Basic Syntax:  #@Macro_Name@#
+
 It provides an administrative panel which makes for simple adding, editing and deletion
 of macros.
 

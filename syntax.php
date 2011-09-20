@@ -66,7 +66,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
         $match = substr($match,2,-2); 
         $match = trim($match);   
         if(strpos($match, 'HTML')) $html=true;
-        file_put_contents(DOKU_INC ."textinsert.txt", $match);
+       // file_put_contents(DOKU_INC ."textinsert.txt", $match);
         $this->macros = $this->get_macros();
         if(!array_key_exists($match, $this->macros)) {
            msg("$match macro was not found in the macros database", -1);  

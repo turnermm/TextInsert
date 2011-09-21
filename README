@@ -39,6 +39,13 @@ language directory, for instance lang/de/lang.php.  It will then look for a $lan
 it finds one, it will substitute this for the macro. Otherwise, it will substitute the entry for 
 LANG_name in the textinsert database.  So, there must be a default entry in that database.
 
+Translation macros can be embeded in other macros, including other translation macros.
+And other macros can emdedded in translation macros.  They also accept entities, as
+described above.
+
+For HTML output, HTML tags are accepted in translation macros, but for the HTML
+to become effective, these must be included in a standard HTML macro definition
+string. In effect, they must be doubly bound to the HTML   
 
 
 

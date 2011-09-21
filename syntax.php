@@ -74,12 +74,12 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 			}
 
 		if($translation) {
-		    global $ID;
-            list($ns,$rest) = explode(':',$ID,2);			 
-			if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/lang.php")) {
-				include $filename;
-				$this->translations = $lang;
-			}
+			global $ID;
+			list($ns,$rest) = explode(':',$ID,2);			 
+				if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/lang.php")) {
+					include $filename;
+					$this->translations = $lang;
+           }
 		}
 		
         $this->macros = $this->get_macros();
@@ -89,16 +89,15 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
            $match = "";              
         }
         else {
-			   if($translation && isset($this->translations[$trans])){
-			       $match = $this->translations[$trans];
-				   return array($state,$match);
-			   }
-			   else {
-					$match =$this->macros[$match];
-				}
+			if($translation && isset($this->translations[$trans])){
+				$match = $this->translations[$trans];
+			}
+			else {
+				$match =$this->macros[$match];
+			}
 		   }
 		
-        $match = $this->get_inserts($match); 
+        $match = $this->get_inserts($match,$translation); 
 		 
         if($html) {
           $match =  str_replace('&lt;','<',$match);
@@ -126,18 +125,24 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
        return array();
     }
 
-   function get_inserts($match) {
+   function get_inserts($match,$translation) {
       $inserts = array();    
 	  
 	  // replace embedded macros
       if(preg_match_all('/#@(.*?)@#/',$match,$inserts)) {        
-          $keys = $inserts[1]; 
-          $pats = $inserts[0];           
-          for($i=0; $i<count($keys); $i++) {
-            $insert = $this->macros[$keys[$i]];
-            $match = str_replace($pats[$i],$insert,$match);
+		$keys = $inserts[1]; 
+		$pats = $inserts[0];        
+
+		for($i=0; $i<count($keys); $i++) {
+		   $insert = $this->macros[$keys[$i]];
+			if($translation && strpos($keys[$i], 'LANG_') !== false)  {
+					list($prefix,$trans) = explode('_',$keys[$i],2);
+					$insert = $this->translations[$trans];
+			}
+			$match = str_replace($pats[$i],$insert,$match);
           }
-      }
+		  
+      }  // end replace embedded macros
     
       $entities =  getEntities();
       $e_keys = array_keys($entities);

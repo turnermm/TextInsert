@@ -21,6 +21,7 @@ define('MACROS_FILE', REPLACE_DIR . 'macros.ser');
  */
 class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
    var $macros;
+   var $translations;
     /**
      * return some info
      */
@@ -63,17 +64,42 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
      */
     function handle($match, $state, $pos, &$handler){
         $html=false;
+		$translation = false;
         $match = substr($match,2,-2); 
         $match = trim($match);   
         if(strpos($match, 'HTML')) $html=true;
-       // file_put_contents(DOKU_INC ."textinsert.txt", $match);
+        if(strpos($match, 'LANG_') !== false) {
+		    $translation=true;
+			list($prefix,$trans) = explode('_',$match,2);
+			}
+
+		if($translation) {
+		    global $ID;
+            list($ns,$rest) = explode(':',$ID,2);			 
+			if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/lang.php")) {
+				include $filename;
+				$this->translations = $lang;
+			}
+		}
+		
         $this->macros = $this->get_macros();
+		
         if(!array_key_exists($match, $this->macros)) {
            msg("$match macro was not found in the macros database", -1);  
            $match = "";              
         }
-        else $match =$this->macros[$match];
+        else {
+			   if($translation && isset($this->translations[$trans])){
+			       $match = $this->translations[$trans];
+				   return array($state,$match);
+			   }
+			   else {
+					$match =$this->macros[$match];
+				}
+		   }
+		
         $match = $this->get_inserts($match); 
+		 
         if($html) {
           $match =  str_replace('&lt;','<',$match);
           $match =  str_replace('&gt;','>',$match);
@@ -101,8 +127,9 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
     }
 
    function get_inserts($match) {
-      $inserts = array();
-
+      $inserts = array();    
+	  
+	  // replace embedded macros
       if(preg_match_all('/#@(.*?)@#/',$match,$inserts)) {        
           $keys = $inserts[1]; 
           $pats = $inserts[0];           
@@ -119,7 +146,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
       $match = str_replace($e_keys,$e_values,$match);  
       return  $match;
    }
-   
+  
+
 }
 
 

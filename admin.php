@@ -95,6 +95,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
     function get_macros() {
        if(file_exists(MACROS_FILE)) {          
            $a = unserialize(file_get_contents(MACROS_FILE));
+          if(!is_array($a)) return array();
            ksort($a); 
            return $a;
        }

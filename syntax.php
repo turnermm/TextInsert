@@ -75,15 +75,14 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 			list($prefix,$trans) = explode('_',$match,2);
 			}
 
-		if($translation) {
+		
 			global $ID;
 			list($ns,$rest) = explode(':',$ID,2);			 
 				if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/lang.php")) {
 					include $filename;
 					$this->translations = $lang;
            }
-		}
-		
+
         $this->macros = $this->get_macros();
 		
 		if(preg_match('/(.*?)~(.*)~$/',$match,$subtitution)) {
@@ -149,9 +148,10 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 
 		for($i=0; $i<count($keys); $i++) {
 		   $insert = $this->macros[$keys[$i]];
-			if($translation && strpos($keys[$i], 'LANG_') !== false)  {
+			if($translation ||strpos($keys[$i], 'LANG_') !== false)  {
 					list($prefix,$trans) = explode('_',$keys[$i],2);
-					$insert = $this->translations[$trans];
+					$_insert = $this->translations[$trans];
+					if($_insert) $insert =$_insert;
 			}
 			$match = str_replace($pats[$i],$insert,$match);
           }

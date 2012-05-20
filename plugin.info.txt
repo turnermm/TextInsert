@@ -1,7 +1,7 @@
 base textinsert
 author Myron Turner
 email turnermm02@shaw.ca
-date 2011-05-16
+date 2012-03-04
 name textinsert Plugin
 desc replace macro with text subsitutions 
 url 

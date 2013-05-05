@@ -134,15 +134,13 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
     }
     
     function get_macros() {
-       if(file_exists(MACROS_FILE)) {
-         $a = unserialize(file_get_contents(MACROS_FILE));
-         $r =  $this->get_std_replacements() ;
-         $result = array_merge($r,$a);   
-         return array_merge($r,$a);
-        
+        $a = array();
+        if(file_exists(MACROS_FILE)) {
+            $a = unserialize(file_get_contents(MACROS_FILE));
        }
-
-       return array();
+       $r =  $this->get_std_replacements() ;
+       $result = array_merge($r,$a);   
+       return array_merge($r,$a);        
     }
 
    function get_inserts($match,$translation) {
@@ -195,7 +193,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               '!PAGE!',
                               'USER',
                               'DATE',
-							  'EVENT'    
+                              'EVENT'    
                               );
                               
             $values = array(

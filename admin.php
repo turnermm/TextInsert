@@ -210,8 +210,8 @@ JSFN;
       ptln('<button class="button" style="padding:0px;margin:0px;" onclick="replace_show(\'ti_info_btn\');">');
       ptln($this->getLang('hide_info') .'</button>&nbsp;&nbsp;&nbsp;&nbsp;');
       ptln('</div>');
-      ptln('<h2>Info</h2>'); 
-      ptln($this->getLang('msg') . '</div>');
+      ptln('<h2>Info</h2>');
+      ptln( $this->locale_xhtml(intro) . '</div>');   
      
       ptln('<div style="padding-bottom:8px;">');
       ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');

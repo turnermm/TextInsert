@@ -1,0 +1,16 @@
+This panel enables you to add and delete macros and their replacement texts, and to edit them after they have been saved.  A macro name can contain letters, numbers, underscores, hyphens and periods. For example: ''Macro_one.txt''. The replacement texts can accept HTML and can be of any length.
+
+You can add up to six macros at a time.  The sixth is a text area which will allow for extended texts.
+Enter the macro name in the **Macro** column and the texts which they represent in the
+**Substitution** column. 
+
+
+Deletions are unlimited; check off the box(es) next the macro(s) to be deleted and click
+the **Delete** button at the bottom of the screen. Editing is done through the Edit screen, where you are presented
+with all your macros.  You can edit the texts of any number of macros.
+
+
+The macro list will not refresh until after you have submitted your edits, additions, or deletions
+by clicking the appropriate button at the bottom of the screen.
+
+

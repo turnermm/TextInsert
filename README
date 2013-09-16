@@ -47,8 +47,6 @@ For HTML output, HTML tags are accepted in translation macros, but for the HTML
 to become effective, these must be included in a standard HTML macro definition
 string. In effect, they must be doubly bound to the HTML   
 
-
-
 See http://dokuwiki.org/plugin:textinsert for further information.
 
  

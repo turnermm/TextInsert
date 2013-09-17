@@ -215,19 +215,19 @@ JSFN;
      
       ptln('<div style="padding-bottom:8px;">');
       ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');
-      ptln($this->getLang('add_macros') .'</button>&nbsp;');
+      ptln($this->getLang('add_macros') .'</button>&nbsp;&nbsp;');
      
       ptln('<button class="button" onclick="replace_show(\'macro_del\'); ">');
-      ptln($this->getLang('delete_macros') .'</button>&nbsp;');
+      ptln($this->getLang('delete_macros') .'</button>&nbsp;&nbsp;');
 
       ptln('<button class="button" onclick="replace_show(\'macro_edit\'); ">');
-      ptln($this->getLang('edit_macros') .'</button>');
+      ptln($this->getLang('edit_macros') .'</button>&nbsp;&nbsp;');
 
       ptln('<button class="button" onclick="ti_getEL(\'macro_list\').style.display=\'block\';ti_getEL(\'macro_list\').scrollIntoView();">');
-      ptln($this->getLang('view_macros') .'</button>&nbsp;');
+      ptln($this->getLang('view_macros') .'</button>&nbsp;&nbsp;');
 
       ptln('<button class="button" onclick="ti_getEL(\'macro_list\').style.display=\'none\';">');
-      ptln($this->getLang('hide_macros') .'</button>');
+      ptln($this->getLang('hide_macros') .'</button>&nbsp;&nbsp;');
 
       ptln('<button class="button" id="ti_info_btn" style="display:none" onclick="ti_getEL(\'ti_info\').style.display=\'block\';">');
       ptln($this->getLang('show_info') .'</button>');

@@ -115,7 +115,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
 
    function get_edit_list() {
       $macros = $this->macros_data;
-      ptln('<table cellspacing="4"><tr><th align="center">Macro</th><th align="center">Substitution</th></tr>');
+      ptln('<table cellspacing="4"><tr><th align="center">Macro</th><th align="center">' . $this->getLang('col_subst') .'</th></tr>');
       foreach($macros as $macro=>$subst) {
           ptln("<tr><td align='center'>$macro&nbsp;</td><td>");
           $encoded = urlencode($subst);        
@@ -274,7 +274,7 @@ JSFN;
       ptln('</form>');
 
       ptln('<br /><div id="macro_list" style="overflow:auto;display:block;">');
-      ptln('<h2>Macro List</h2>');
+      ptln('<h2>' . $this->getLang('label_list') .  '</h2>');
       $this->view_entries(); 
       ptln('</div>');
     }

@@ -86,7 +86,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
        $encoded = $_REQUEST['encoded'];  
        $encoded = array_map(urldecode,$encoded);
        foreach($encoded AS $k=>$val) {
-          $macros[$k] = $val;  
+          $macros[$k] = htmlspecialchars ($val,ENT_NOQUOTES, 'UTF-8', false);            
        }
         io_saveFile(MACROS_FILE,serialize($macros));
         return $macros;

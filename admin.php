@@ -58,7 +58,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
       foreach ($macros AS $key=>$value) {
         if(isset($value) && trim($value)) {
            if(isset($words[$key]) && trim($words[$key])) { 
-             $a[$value] = hsc($words[$key]);
+             $a[$value] = htmlspecialchars (($words[$key]),ENT_NOQUOTES, 'UTF-8');            
          }
         }
      }

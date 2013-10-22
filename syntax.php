@@ -26,16 +26,6 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
     /**
      * return some info
      */
-    function getInfo(){
-        return array(
-            'author' => 'Myron Turner',
-            'email'  => 'turnermm02@shaw.ca',
-           'date'   => '2011-05-13',
-            'name'   => 'word replacement Plugin',
-            'desc'   => 'replace Macros with words',
-            'url'    => 'http://www.dokuwik.org/plugin:wordreplace',
-        );
-    }
 
     /**
      * What kind of syntax are we?

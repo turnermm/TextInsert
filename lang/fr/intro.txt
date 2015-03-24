@@ -1,0 +1,10 @@
+Ce panneau vous permet d'ajouter et supprimer des macros et leur textes de remplacement, de les modifier après leur enregistrement. Un nom de macro peut contenir des lettres, des nombres, des tirets bas, traits d'union et points. Par exemple : ''Macro_one.txt''. Le texte de remplacement peut accepter le HTML et peut être de n'importe quelle longueur.
+
+Vous pouvez ajouter jusqu'à six macros à la fois. Le sixième est une zone de texte qui permettra de longs textes.
+Entrez le nom de la macro dans la colonne **Macro** et les textes qu'ils représentent dans la colonne **Remplacement**. 
+
+
+Les suppressions sont illimitées ; cochez la devant la macro à supprimer et cliquez sur le bouton **Supprimer** en bas de l'écran. La modification se fait à travers l'écran de modification, où vous sont présenté toutes vos macros. Vous pouvez modifier les textes de n'importe quel nombre de macros.
+
+
+La liste macro ne s'actualise pas jusqu'à ce que vous avez envoyer vos modifications, ajouts ou suppressions en cliquant sur le bouton approprié en bas de l'écran.

@@ -8,7 +8,7 @@
 if(!defined('DOKU_INC')) die();
 
 define('REPLACE_DIR', DOKU_INC . 'data/meta/macros/');
-define('MACROS_FILE', REPLACE_DIR . 'macros.ser');
+
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
@@ -21,6 +21,15 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
     /**
      * handle user request
      */
+     function __construct() {
+         if(!$this->getConf('farm')) {             
+             define('MACROS_FILE', REPLACE_DIR . 'macros.ser');         
+         }
+         else {
+             define('MACROS_FILE', metaFN('macros','.ser')); 
+         }   
+         
+     }
     function handle() {
       
       $this->macros_file=MACROS_FILE;

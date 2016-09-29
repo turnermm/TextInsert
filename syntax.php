@@ -128,6 +128,9 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
         if(file_exists(MACROS_FILE)) {
             $a = unserialize(file_get_contents(MACROS_FILE));
        }
+       else if($this->getConf('farm')) { 
+           $a = unserialize(file_get_contents(metaFN('macros','.ser')));
+       }
        $r =  $this->get_std_replacements() ;
        $result = array_merge($r,$a);   
        return array_merge($r,$a);        

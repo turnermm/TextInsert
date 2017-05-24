@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Ner0lph <forums@ner0lph.tk>
  */
 $lang['menu']                  = 'TextInsert Macro Replacement Plugin';

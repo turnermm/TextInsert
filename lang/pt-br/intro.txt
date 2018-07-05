@@ -1,0 +1,13 @@
+Esse painel permite adicionar e excluir macros e seus textos de substituição e editá-los depois de salvos. Um nome de macro pode conter letras, números, sublinhados, hífens e pontos. Por exemplo: '' Macro_one.txt ''. Os textos de substituição podem aceitar HTML e podem ser de qualquer tamanho.
+
+Você pode adicionar até seis macros por vez. A sexta é uma área de texto que permitirá textos estendidos.
+Insira o nome da macro na coluna ** Macro ** e os textos que eles representam na
+** Substituição ** coluna. 
+
+Deleções são ilimitadas; marque a caixa ao lado da(s) macro(s) a ser (em) excluída(s) e clique
+no botão ** Excluir ** na parte inferior da tela. A edição é feita através da tela Editar, onde você é apresentado
+com todas as suas macros. Você pode editar os textos de qualquer número de macros.
+
+
+A lista de macros não será atualizada até que você tenha enviado suas edições, adições ou exclusões
+clicando no botão apropriado na parte inferior da tela.

@@ -94,7 +94,7 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
        $macros = $this->get_macros();
             
        $encoded = $_REQUEST['encoded'];  
-       $encoded = array_map(urldecode,$encoded);
+       $encoded = array_map('urldecode',$encoded);
        foreach($encoded AS $k=>$val) {
           $macros[$k] = htmlspecialchars ($val,ENT_NOQUOTES, 'UTF-8', false);            
        }
@@ -221,7 +221,7 @@ JSFN;
       ptln($this->getLang('hide_info') .'</button>&nbsp;&nbsp;&nbsp;&nbsp;');
       ptln('</div>');
       ptln('<h2>Info</h2>');
-      ptln( $this->locale_xhtml(intro) . '</div>');   
+      ptln( $this->locale_xhtml('intro') . '</div>');   
      
       ptln('<div style="padding-bottom:8px;">');
       ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');

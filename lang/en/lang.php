@@ -27,5 +27,6 @@ $lang['view_macros'] = 'View Macro List';
 $lang['hide_macros'] = 'Hide Macro List';
 $lang['hide_info'] = 'Close Info';
 $lang['show_info'] = 'Show Info';
+$lang['not_found'] = 'macro was not found in the macros database';
 
 

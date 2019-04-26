@@ -82,7 +82,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 		}
    
         if(!array_key_exists($match, $this->macros) ) {
-           msg("$match macro was not found in the macros database", -1);  
+            $err = $this->getLang('not_found');
+           msg("$match $err", -1);  
            $match = "";              
         }
         else {
@@ -114,9 +115,12 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
      * Create output
      */
     function render($mode, Doku_Renderer $renderer, $data) {
+        global $INFO;
         if($mode == 'xhtml'){           
-            list($state, $word) = $data;
-         
+            list($state, $word) = $data;          
+            If(strpos($word,'_ID_') !== false ) {               
+                $word = str_replace('_ID_',$INFO['id'], $word);      
+            }
             $renderer->doc .= $word;
             return true;
         }
@@ -186,7 +190,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               '!PAGE!',
                               'USER',
                               'DATE',
-                              'EVENT'    
+                              '_ID_'
                               );
                               
             $values = array(
@@ -201,7 +205,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               utf8_strtoupper($page),
                               $_SERVER['REMOTE_USER'],                              
                               strftime($conf['dformat'], time()),
-							  $event->name ,
+							  '_ID_'
                            );
      $std_replacements = array();
      for($i=0; $i<count($names) ; $i++) {

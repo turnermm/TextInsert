@@ -4,6 +4,17 @@
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Myron Turner <turnermm02@shaw.ca>
+ *
+ *             Modification by Hans-Juergen Schuemmer <hans-juergen.schuemmer@web.de>
+ *             Additional syntax "MULTI" for multi line plugin 
+ *             with separation of the parameters by "|...|" and line breaks in the output by "|+...|"
+ *             Example:
+ *             #@CMS_GEFAHR_MULTI~
+ *             |Gefahr       |
+ *             |Überschrift  |
+ *             |+zweizeilig  |
+ *             |Hinweistext  |
+ *             ~@#
  * 
  */
 // must be run within Dokuwiki
@@ -51,7 +62,6 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 		$this->Lexer->addSpecialPattern('#@[\w\-\._]+~.*?~@#',$mode,'plugin_textinsert');
     }
 
-
     /**
      * Handle the match
      */
@@ -59,9 +69,18 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 		
         $html=false;
 		$translation = false;
+
+		/* Modification for "MULTI": new variable "$multi": */
+        $multi=false;
+
         $match = substr($match,2,-2); 
         $match = trim($match);   
+		
         if(strpos($match, 'HTML')) $html=true;
+
+		/* Modification for "MULTI": new request: */
+        if(strpos($match, 'MULTI')) $multi=true;
+
         if(strpos($match, 'LANG_') !== false) {
 		    $translation=true;
 			list($prefix,$trans) = explode('_',$match,2);
@@ -74,17 +93,33 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 					$this->translations = $lang;
            }
     
+		/* Modification for "MULTI": Removing line breaks: */
+		if($multi) {
+			/* eleminate all kind of line feeds in input */
+			$match = str_replace(array("\r\n", "\r", "\n"), '', $match); 
+			/* delete the first and the last occurrence of "|" to fit the original syntax */
+			$match = str_replace(array("~|"), '~', $match);
+			$match = str_replace(array("|~"), '~', $match);
+			/* set a targeted line feed for the output */
+			$match = str_replace(array("||+"), '<br>', $match);
+		}
+		
         $this->macros = $this->get_macros();
 		
 		if(preg_match('/(.*?)~(.*)~$/',$match,$subtitution)) {
-		   	$match=$subtitution[1];
-		   	$substitutions=explode(',',$subtitution[2]);			
+			$match=$subtitution[1];
+
+			/* Modification for "MULTI": substitution by "||" instead of ",": */
+			if($multi) {
+				$substitutions=explode('||',$subtitution[2]);}			
+			else
+				{$substitutions=explode(',',$subtitution[2]);
+			}
 		}
-   
+		  
         if(!array_key_exists($match, $this->macros) ) {
-            $err = $this->getLang('not_found');
-           msg("$match $err", -1);  
-           $match = "";              
+           multiline("$match macro was not found in the macros database", -1);  
+           $match = "";
         }
         else {
 			if($translation && isset($this->translations[$trans])){
@@ -93,9 +128,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 			else {
 				$match =$this->macros[$match];                
 			}
-		   }
-		  
-		if(!is_array($substitutions)) $substitutions = array();
+		}
+		
 		for($i=0; $i<count($substitutions); $i++) {
 	            $search = '%' . ($i+1);
 	            $match = str_replace ($search ,  $substitutions[$i], $match);
@@ -107,7 +141,11 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
           $match =  str_replace('&lt;','<',$match);
           $match =  str_replace('&gt;','>',$match);
         }
-
+        if($multi) {
+          $match =  str_replace('&lt;','<',$match);
+          $match =  str_replace('&gt;','>',$match);
+        }
+		
         return array($state,$match);
     }
 
@@ -115,12 +153,9 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
      * Create output
      */
     function render($mode, Doku_Renderer $renderer, $data) {
-        global $INFO;
         if($mode == 'xhtml'){           
-            list($state, $word) = $data;          
-            If(strpos($word,'_ID_') !== false ) {               
-                $word = str_replace('_ID_',$INFO['id'], $word);      
-            }
+            list($state, $word) = $data;
+         
             $renderer->doc .= $word;
             return true;
         }
@@ -190,7 +225,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               '!PAGE!',
                               'USER',
                               'DATE',
-                              '_ID_'
+                              'EVENT'    
                               );
                               
             $values = array(
@@ -205,7 +240,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               utf8_strtoupper($page),
                               $_SERVER['REMOTE_USER'],                              
                               strftime($conf['dformat'], time()),
-							  '_ID_'
+							  $event->name ,
                            );
      $std_replacements = array();
      for($i=0; $i<count($names) ; $i++) {
@@ -219,7 +254,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 	  return;
 	  $what=print_r($what,true);
        if($screen) {
-       msg('<pre>' . $what . '</pre>');     
+       multiline('<pre>' . $what . '</pre>');     
            return;
        }
 	   $handle=fopen("textinsert.txt",'a');
@@ -227,5 +262,3 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 	   fclose($handle);
   }
 }
-
-

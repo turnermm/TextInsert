@@ -78,11 +78,10 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
         $this->macros = $this->get_macros();
 		
 		if(preg_match('/(.*?)~([\s\S]+)~$/',$match,$subtitution)) {
-		   	$match=$subtitution[1];
+             $match=$subtitution[1];
              $subtitution[2] = str_replace('\\,','&#44;',$subtitution[2]);
-		   	$substitutions=explode(',',$subtitution[2]);			
-             $substitutions = preg_replace('#\/\/.+#',"",$substitutions);       
-           //   msg(htmlentities(implode(',',$substitutions)));
+             $substitutions=explode(',',$subtitution[2]);	
+             $substitutions = preg_replace('#\/\/.+#',"",$substitutions);        
 		}
    
         if(!array_key_exists($match, $this->macros) ) {

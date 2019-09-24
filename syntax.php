@@ -103,7 +103,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 		if(!is_array($substitutions)) $substitutions = array();
 		for($i=0; $i<count($substitutions); $i++) {
 	            $search = '%' . ($i+1);
-	            $match = str_replace ($search ,  $substitutions[$i], $match);
+	            $match = str_replace ($search ,  trim($substitutions[$i]), $match);
         }	
         
         $match = $this->get_inserts($match,$translation); 

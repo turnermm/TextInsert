@@ -49,6 +49,7 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('#@\!?[\w\-\._]+\!?@#',$mode,'plugin_textinsert');
         $this->Lexer->addSpecialPattern('#@\!\![\w\-\._]+@#',$mode,'plugin_textinsert');
 		$this->Lexer->addSpecialPattern('#@[\w\-\._]+~.*?~@#',$mode,'plugin_textinsert');
+        $this->Lexer->addSpecialPattern('#@[\w\-\._]+[\r\n]+~[^\r\n]+~@#',$mode,'plugin_textinsert');
     }
 
 
@@ -80,6 +81,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 		   	$match=$subtitution[1];
              $subtitution[2] = str_replace('\\,','&#44;',$subtitution[2]);
 		   	$substitutions=explode(',',$subtitution[2]);			
+             $substitutions = preg_replace('#\/\/.+#',"",$substitutions);       
+           //   msg(htmlentities(implode(',',$substitutions)));
 		}
    
         if(!array_key_exists($match, $this->macros) ) {

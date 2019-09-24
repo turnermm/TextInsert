@@ -82,6 +82,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
              $subtitution[2] = str_replace('\\,','&#44;',$subtitution[2]);
              $substitutions=explode(',',$subtitution[2]);	
              $substitutions = preg_replace('#\/\/.+#',"",$substitutions);        
+             $substitutions = preg_replace('#\\\\n#',"<br />",$substitutions);        
+             
 		}
    
         if(!array_key_exists($match, $this->macros) ) {

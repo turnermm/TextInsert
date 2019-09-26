@@ -77,13 +77,24 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
     
         $this->macros = $this->get_macros();
 		
+       
+       
+        while(preg_match('#(\*\*|//|__|\'\').*?\1#m',$match )) { 
+            $match = preg_replace_callback(
+            '#(\*\*|//|__|\'\')(.*?)(\1)#',
+                function($matches) {
+                    $matches[1] = str_replace(array('**','//','__','\'\'',),array('<b>','<em>','<u>','<code>'),$matches[1]);
+                   $matches[3] = str_replace(array('**','//','__','\'\''),array('</b>','</em>','</u>','</code>'),$matches[3]);    
+                    return $matches[1] . $matches[2] . $matches[3];
+                },$match );
+        }		
+        
 		if(preg_match('/(.*?)~([\s\S]+)~$/',$match,$subtitution)) {
              $match=$subtitution[1];
              $subtitution[2] = str_replace('\\,','&#44;',$subtitution[2]);
              $substitutions=explode(',',$subtitution[2]);	
              $substitutions = preg_replace('#\/\/.+#',"",$substitutions);        
-             $substitutions = preg_replace('#\\\\n#',"<br />",$substitutions);        
-             
+             $substitutions = preg_replace('#\\\n#',"<br />",$substitutions);    
 		}
    
         if(!array_key_exists($match, $this->macros) ) {

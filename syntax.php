@@ -22,7 +22,7 @@ define('MACROS_FILE', REPLACE_DIR . 'macros.ser');
 class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
    var $macros;
    var $translations;
-
+   var $ns;
     /**
      * return some info
      */
@@ -73,8 +73,22 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
 				if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/lang.php")) {
 					include $filename;
 					$this->translations = $lang;
+               
+            }
+ 			
+			if(@file_exists($filename = DOKU_PLUGIN . "textinsert/lang/$ns/macros.php")) {
+					include $filename;   
+                    $ar = 'lang_' .$ns;           
+                    $tr = $$ar;	            				
+                    if($this->translations)  {
+                          $this->translations = array_merge($lang,$tr);                       
+                    }
+				    else $this->translations = $tr;
            }
     
+           if(!empty($ns)) {
+               $this->ns = $ns;
+           }
         $this->macros = $this->get_macros();
 		
        

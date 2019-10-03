@@ -34,8 +34,9 @@ Translation Support
 #@LANG_name@#
 If a macro has this format, textinsert checks the file's namespace for a language specified
 as an ISO abbreviation,  for instance nl for Dutch or de for German -- as in de:my_file.  If it finds
-a language specification, it will check the textinsert/lang directory for a lang.php file in the relevant
-language directory, for instance lang/de/lang.php.  It will then look for a $lang['name'] entry and if
+a language specification, it will check the textinsert/lang directory for either macros.php or a  lang.php
+file in the relevant language directory, for instance lang/de/lang.php.  It will then look for a
+$lang['name'] entry in lang.php or a $lang_<iso>['name'] entry in macros.php, and if
 it finds one, it will substitute this for the macro. Otherwise, it will substitute the entry for 
 LANG_name in the textinsert database.  So, there must be a default entry in that database.
 

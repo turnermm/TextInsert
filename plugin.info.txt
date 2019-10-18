@@ -1,7 +1,7 @@
 base textinsert
 author Myron Turner
 email turnermm02@shaw.ca
-date 2019-10-03
+date 2019-10-18
 name textinsert Plugin
 desc replace macros with text subsitutions 
 url https://www.dokuwiki.org/plugin:textinsert

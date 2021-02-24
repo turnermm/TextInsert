@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hérisson grognon <dodoperso@laposte.net>
  * @author Ner0lph <forums@ner0lph.tk>
  */
 $lang['menu']                  = 'TextInsert Macro Replacement Plugin';
@@ -19,5 +20,6 @@ $lang['delete_macros']         = 'Supprimer des macros';
 $lang['edit_macros']           = 'Modifier des macros';
 $lang['view_macros']           = 'Afficher la liste des macros';
 $lang['hide_macros']           = 'Cacher la liste des macros';
-$lang['hide_info']             = 'Fermer l\'info';
-$lang['show_info']             = 'Montrer l\'info';
+$lang['hide_info']             = 'Fermer les informations';
+$lang['show_info']             = 'Montrer les informations';
+$lang['not_found']             = 'Le macro n\'a pas été trouvé dans la base de données des macros.';

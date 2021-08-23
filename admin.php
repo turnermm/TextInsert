@@ -133,11 +133,11 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
              ptln("<input type = 'hidden' name='encoded[$macro]' value='$encoded'>");
           }
           if(strlen($subst) > 80) {
-            ptln ("<textarea cols='55' rows='3' name='edit[$macro]' onchange='replace_encode(this)'>$subst</textarea></td></tr>");            
+            ptln ("<textarea cols='55' rows='3' name='edit[$macro]' onchange='ti_replace_encode(this)'>$subst</textarea></td></tr>");            
 
           }
           else {
-            ptln ("<input type='text' size='80' name='edit[$macro]' onchange='replace_encode(this)' value='$subst'></td></tr>");            
+            ptln ("<input type='text' size='80' name='edit[$macro]' onchange='ti_replace_encode(this)' value='$subst'></td></tr>");            
           }
 
       }
@@ -154,83 +154,30 @@ class admin_plugin_textinsert extends DokuWiki_Admin_Plugin {
       ptln('</table>');
    }
 
-   function js() {
-  
-echo <<<JSFN
-
- <script type="text/javascript">
- //<![CDATA[ 
-    var replace_divs= new Array('macro_add','macro_del','macro_edit','ti_info','macro_list');
-   /**
-    * Edit onChange handler
-    * @param el  input element which has been changed
-    * @desc  if an encode hidden input already exists, its value
-    *        is re-encoded from the text input's value
-    *        If not, a new encoded hidden input is created with the encoded 
-    *        value.  The encode input value is used to substitute the new edit values
-    *        in the php edit() function 
-   */
-    function replace_encode (el) {
-      var matches = el.name.match(/\[(.*)\]/);
-      if(matches[1]) {  
-        var name = 'encoded['+matches[1]+']';
-        var val = el.value;
-        val = val.replace(/>/g,"&gt;"); 
-        val = val.replace(/</g,"&lt;");          
-        if(!el.form[name]) {
-            var encoder = document.createElement('input');           
-            encoder.type = 'hidden';
-            encoder.name = name;
-            encoder.value = encodeURIComponent(val);
-            el.form.appendChild(encoder);  
-        }
-        else if(el.form[name]) { 
-          el.form[name].value = encodeURIComponent(val);
-        }
-      }
-    }
-    
- function ti_getEL(n) {     
-      return document.getElementById(n);      
-  }
-  
- function replace_show(which) {
-    for(var i in replace_divs) {
-      ti_getEL(replace_divs[i]).style.display='none';
-    }
-    ti_getEL(which).style.display='block';
-    ti_getEL('ti_info_btn').style.display='inline';
- }
-//]]> 
- </script>
-JSFN;
-
-   }
     /**
      * output appropriate html
      */
     function html() {
      $this->macros_data = $this->get_macros();
-     $this->js();
       if($this->output) {
         ptln('<pre>' . $this->output . '</pre>');
       }
       ptln('<div style="padding:4px" id="ti_info">');     
       ptln('<div style="text-align:right;">');
-      ptln('<button class="button" style="padding:0px;margin:0px;" onclick="replace_show(\'ti_info_btn\');">');
+      ptln('<button class="button" style="padding:0px;margin:0px;" onclick="ti_replace_show(\'ti_info_btn\');">');
       ptln($this->getLang('hide_info') .'</button>&nbsp;&nbsp;&nbsp;&nbsp;');
       ptln('</div>');
       ptln('<h2>Info</h2>');
       ptln( $this->locale_xhtml('intro') . '</div>');   
      
       ptln('<div style="padding-bottom:8px;">');
-      ptln('<button class="button" onclick="replace_show(\'macro_add\'); ">');
+      ptln('<button class="button" onclick="ti_replace_show(\'macro_add\'); ">');
       ptln($this->getLang('add_macros') .'</button>&nbsp;&nbsp;');
      
-      ptln('<button class="button" onclick="replace_show(\'macro_del\'); ">');
+      ptln('<button class="button" onclick="ti_replace_show(\'macro_del\'); ">');
       ptln($this->getLang('delete_macros') .'</button>&nbsp;&nbsp;');
 
-      ptln('<button class="button" onclick="replace_show(\'macro_edit\'); ">');
+      ptln('<button class="button" onclick="ti_replace_show(\'macro_edit\'); ">');
       ptln($this->getLang('edit_macros') .'</button>&nbsp;&nbsp;');
 
       ptln('<button class="button" onclick="ti_getEL(\'macro_list\').style.display=\'block\';ti_getEL(\'macro_list\').scrollIntoView();">');

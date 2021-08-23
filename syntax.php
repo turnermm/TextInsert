@@ -154,6 +154,9 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
            else If(strpos($word,'_NS_') !== false ) {               
                 $word = str_replace('_NS_',getNS($INFO['id']), $word);      
             }
+            else If(strpos($word,'_DATE_') !== false ) {               
+                $word = str_replace('_DATE_',date("j-n-Y") , $word);      
+            }           
             $renderer->doc .= $word;
             return true;
         }
@@ -224,7 +227,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               'USER',
                               'DATE',
                               '_ID_',
-                              '_NS_'
+                              '_NS_',
+                              '_DATE_'
                               );
                               
             $values = array(
@@ -240,7 +244,8 @@ class syntax_plugin_textinsert extends DokuWiki_Syntax_Plugin {
                               $_SERVER['REMOTE_USER'],                              
                               strftime($conf['dformat'], time()),
                               '_ID_',
-                              '_NS_'
+                              '_NS_',
+                              '_DATE_'                              
                            );
      $std_replacements = array();
      for($i=0; $i<count($names) ; $i++) {

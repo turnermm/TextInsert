@@ -1,0 +1,14 @@
+In diesem Bereich können Sie Makros und ihre Ersatztexte hinzufügen, löschen und nach dem Speichern bearbeiten.  Ein Makroname kann Buchstaben, Zahlen, Unterstriche, Bindestriche und Punkte enthalten. Zum Beispiel: ''Makro_eins.txt''. Die Ersetzungstexte können HTML beinhalten und beliebig lang sein.
+
+
+Sie können bis zu sechs Makros auf einmal hinzufügen.  Das sechste Makro ist ein Textbereich, in dem Sie längere Texte eingeben können.
+
+Geben Sie den Namen des Makros in die Spalte **Makros** und die Ersatz-Texte in die Spalte **Makros ersetzen** ein.
+
+
+Löschungen sind unbegrenzt möglich; kreuzen Sie das/die Kästchen neben dem/den zu löschenden Makro(s) an und klicken Sie
+die Schaltfläche **Löschen** am unteren Rand des Bildschirms. Die Bearbeitung erfolgt über den Bildschirm "Bearbeiten", auf dem Sie
+Ihre ganzen Makros überblicken können.  Sie können die Texte einer beliebigen Anzahl von Makros bearbeiten.
+
+
+Die Makroliste wird erst aktualisiert, nachdem Sie Ihre Änderungen, Ergänzungen oder Löschungen gespeichert haben.
